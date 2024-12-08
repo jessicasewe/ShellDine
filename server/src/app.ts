@@ -15,6 +15,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+console.log("JWT_SECRET before routes:", process.env.JWT_SECRET);
+
 //test routes
 app.use("/api/menu", MenuRoutes);
 app.use("/api/orders", protect as any, OrderRoutes);
