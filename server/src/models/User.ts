@@ -12,7 +12,7 @@ const UserSchema: Schema = new Schema(
   {
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, required: true, default: "user" }, // Default to 'user'
+    role: { type: String, required: true, enum: ["admin", "user"] },
   },
   {
     timestamps: true,
@@ -22,8 +22,6 @@ const UserSchema: Schema = new Schema(
 // Encrypt password before saving
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  const hashedPassword = await bcrypt.hash(this.password as string, 10);
-  this.password = hashedPassword;
   next();
 });
 
